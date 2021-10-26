@@ -35,13 +35,21 @@ public class Game
     private void createRooms()
     {
         Room outside, theater, pub, lab, office;
-      
+        // Items for each room
+        Item outside_Item, theater_Item, pub_Item, lab_Item, office_Item;
+        //define each item
+        outside_Item = new Item("Bench: To sit and wait" , 0);
+        theater_Item = new Item("Projector: Can be used to display videos", 500);
+        pub_Item = new Item("Beer", 100);
+        lab_Item = new Item("Laptop: To access useful files", 800);
+        office_Item = new Item("Key stand: Contains keys for other rooms", 400);
+                                
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        outside = new Room("outside the main entrance of the university", outside_Item);
+        theater = new Room("in a lecture theater", theater_Item);
+        pub = new Room("in the campus pub", pub_Item);
+        lab = new Room("in a computing lab", lab_Item);
+        office = new Room("in the computing admin office", office_Item);
         
         // initialise room exits
         outside.setExit("east", theater);

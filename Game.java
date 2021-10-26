@@ -11,8 +11,8 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Matthew Lee
+ * @version 10.25.21
  */
 
 public class Game 
@@ -118,6 +118,10 @@ public class Game
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+                
+            case LOOK:
+                look();
+                break;
         }
         return wantToQuit;
     }
@@ -178,5 +182,14 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+    
+    /**
+     * "Look" was entered. Print out the description of the room
+     * and the exits that are available
+     */
+    private void look()
+    {
+        System.out.println(currentRoom.getLongDescription());
     }
 }

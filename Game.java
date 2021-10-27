@@ -34,22 +34,42 @@ public class Game
      */
     private void createRooms()
     {
+        // Each room of the game
         Room outside, theater, pub, lab, office;
         // Items for each room
-        Item outside_Item, theater_Item, pub_Item, lab_Item, office_Item;
-        //define each item
-        outside_Item = new Item("Bench: To sit and wait" , 0);
-        theater_Item = new Item("Projector: Can be used to display videos", 500);
-        pub_Item = new Item("Beer", 100);
-        lab_Item = new Item("Laptop: To access useful files", 800);
-        office_Item = new Item("Key stand: Contains keys for other rooms", 400);
+        Item outsideItems[] = {new Item ("Rope" , 50),
+                               new Item ("Bench to sit on", 10000),
+                               new Item ("Flower" , 5) };
+                               
+        Item theaterItem[] = { new Item ("Projector to display videos" , 1500),
+                               new Item ("Popcorn: +20hp" , 100),
+                               new Item ("Wallet: contains $20", 150) };
+                               
+        Item pubItem[] = {     new Item ("Beer: -5 health", 15),
+                               new Item ("Soda: +10hp", 50),
+                               new Item ("Apple: +50hp", 250) };
+                               
+        Item labItem[] = {     new Item ("Laptop: email - Hello Matt I left you a special apple in my office for you to try", 1000), 
+                               new Item ("Lighter" , 100),
+                               new Item ("Strange mushroom: -100hp", 5) };
+                               
+        Item officeItem[] = {  new Item ("Keys: can unlock certain doors", 250),
+                               new Item ("Golden apple: +1000 carry capacity", 15),
+                               new Item ("Flashlight", 150) };
                                 
         // create the rooms
-        outside = new Room("outside the main entrance of the university", outside_Item);
-        theater = new Room("in a lecture theater", theater_Item);
-        pub = new Room("in the campus pub", pub_Item);
-        lab = new Room("in a computing lab", lab_Item);
-        office = new Room("in the computing admin office", office_Item);
+        outside = new Room("outside the main entrance of the university");
+        theater = new Room("in a lecture theater");
+        pub = new Room("in the campus pub");
+        lab = new Room("in a computing lab");
+        office = new Room("in the computing admin office");
+        
+        // add each item into each room
+        outside = addItemsToRoom(outside, outsideItems);
+        theater = addItemsToRoom(theater, theaterItem);
+        pub = addItemsToRoom(pub, pubItem);
+        lab = addItemsToRoom(lab, labItem);
+        office = addItemsToRoom(office, officeItem);
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -68,6 +88,17 @@ public class Game
         currentRoom = outside;  // start game outside
     }
 
+    /**
+     * Method to add each item to a given room
+     */
+    public Room addItemsToRoom(Room room, Item items[])
+    {
+        for (int i = 0; i < items.length; i++) {
+            room.addItem(items[i]);
+        }
+        return room;
+    }
+    
     /**
      *  Main play routine.  Loops until end of play.
      */

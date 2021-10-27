@@ -30,14 +30,22 @@ public class Item
         itemWeight = weight;
     }
     
+    public String getItemDescription()
+    {
+        String itemString = "\tItem name: " + this.itemDescription + "\n";
+        itemString += "\tItem Weight: " + this.itemWeight;
+        return itemString;
+    }
+    
     /**
      * Returns the description and weight of the item found in the room the player enters
      */
+    /*
     public String getItemDescription()
     {
         String itemString = "Item Description: ";
         itemString += this.itemDescription + "\n";
         itemString += "Item Weight: " + this.itemWeight;
         return itemString;
-    }
+    }*/
 }

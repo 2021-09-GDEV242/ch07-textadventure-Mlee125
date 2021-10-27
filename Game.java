@@ -19,7 +19,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room prevRoom;
+    private Room roomStack[];
+    private int top;
         
     /**
      * Create the game and initialise its internal map.
@@ -28,6 +29,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        roomStack = new Room[500];
+        top = -1;
     }
 
     /**
@@ -87,9 +90,6 @@ public class Game
         office.setExit("west", lab);
 
         currentRoom = outside;  // start game outside
-        
-        // Initialise prevRoom
-        prevRoom = null;
     }
 
     /**
@@ -214,7 +214,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
-            prevRoom = currentRoom;
+            push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -258,7 +258,38 @@ public class Game
      */
     public void backRoom()
     {
-        currentRoom = prevRoom;
-        System.out.println(currentRoom.getLongDescription());
+        currentRoom = pop();
+        if(currentRoom != null) {
+            System.out.println(currentRoom.getLongDescription());
+        }
+    }
+    
+    /**
+     * Add the current room to the stack
+     * @param add room to the roomStack
+     */
+    private void push (Room room)
+    {
+        if(top == roomStack.length - 1) {
+            System.out.println("Room stack is full");
+        }
+        else {
+            roomStack[++top] = room;
+        }
+    }
+    
+    /**
+     * Deletes the room at the top of the stack
+     * @return room if it exits and null if it doesn't
+     */
+    private Room pop()
+    {
+        if (top < 0) {
+            System.out.println("You are at the start you can't go back any further");
+            return null;
+        }
+        else {
+            return roomStack[top--];
+        }
     }
 }

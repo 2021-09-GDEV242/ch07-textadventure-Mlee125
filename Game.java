@@ -12,13 +12,14 @@
  *  executes the commands that the parser returns.
  * 
  * @author  Matthew Lee
- * @version 10.25.21
+ * @version 10.26.21
  */
 
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
+    private Room prevRoom;
         
     /**
      * Create the game and initialise its internal map.
@@ -86,6 +87,9 @@ public class Game
         office.setExit("west", lab);
 
         currentRoom = outside;  // start game outside
+        
+        // Initialise prevRoom
+        prevRoom = null;
     }
 
     /**
@@ -165,6 +169,10 @@ public class Game
             case EAT:
                 eat();
                 break;
+                
+            case BACK:
+                backRoom();
+                break;
         }
         return wantToQuit;
     }
@@ -206,6 +214,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            prevRoom = currentRoom;
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -242,5 +251,14 @@ public class Game
     private void eat()
     {
         System.out.println("You have eaten now and you are not hungry anymore");
+    }
+    
+    /**
+     * Goes back to the previous room you were in and prints out the description again
+     */
+    public void backRoom()
+    {
+        currentRoom = prevRoom;
+        System.out.println(currentRoom.getLongDescription());
     }
 }

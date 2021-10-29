@@ -22,7 +22,7 @@ public class Game
     private Room currentRoom;
     private Scanner reader;
     private Player player;
-        
+    private ArrayList<String> inventory;
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,6 +30,7 @@ public class Game
     {
         parser = new Parser();
         player = new Player();
+        inventory = new ArrayList<>();
         reader = new Scanner(System.in);
     }
     
@@ -199,6 +200,10 @@ public class Game
             case DROP:
                 dropItemInHand(command);
                 break;
+                
+            case INVENTORY:
+                printItem();
+                break;
         }
         return wantToQuit;
     }
@@ -297,6 +302,7 @@ public class Game
         }
         String itemName = command.getSecondWord();
         player.pickUpItem(itemName);
+        inventory.add(itemName);
     }
     
     /**
@@ -310,5 +316,17 @@ public class Game
         }
         String itemName = command.getSecondWord();
         player.dropItem(itemName);
+        inventory.remove(itemName);
     }
+    
+    /**
+     * Prints out the player's inventory
+     */
+    public void printItem()
+    {
+        System.out.println("\nItems in your inventory: " + inventory);
+    }
+    
+    
+    
 }

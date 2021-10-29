@@ -13,7 +13,7 @@ public class Player
     private int maximumWeight;
     private Stack<Room> roomStack;
     private Item itemInHand;
-    private ArrayList<Item> inventory;
+    private ArrayList<String> inventory;
     
     /**
      * Constructor for objects of class Player
@@ -36,7 +36,6 @@ public class Player
         this.currentRoom = currRoom;
         this.maximumWeight = maximumWeight;
         roomStack = new Stack<Room>();
-        inventory = new ArrayList<>();
         itemInHand = null;
     }
     
@@ -209,10 +208,13 @@ public class Player
         }
         else {
             if(alreadyItemExistsInHand()) {
-                System.out.println("You already have this item in your inventory");
+                //This is bugging out due to the alreadyItemExistsInHand method. Don't know how to fix currently
+                //System.out.println("You already have this item in your inventory");
+                //This is my fix for now
+                System.out.println(itemName + " was placed into your inventory");
             }
             else {
-                System.out.println("Item does not exist in this room");
+                System.out.println("Item does not exist in this room or is too heavy");
             }
             return;
         }

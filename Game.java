@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,20 +20,34 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room roomStack[];
-    private int top;
+    private Scanner reader;
+    private Player player;
         
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
         parser = new Parser();
-        roomStack = new Room[500];
-        top = -1;
+        player = new Player();
+        reader = new Scanner(System.in);
     }
-
+    
+    /**
+     * Creates the player and the players stats into the game
+     */
+    private void createPlayer()
+    {
+        System.out.println("Enter Player Name: ");
+        String name = reader.nextLine();
+        player.setPlayerName(name);
+        createRooms();
+        System.out.println("Enter the maximum weight the player can carry");
+        int weight = reader.nextInt();
+        player.setMaximumWeight(weight);
+    }
+    
+    
     /**
      * Create all the rooms and link their exits together.
      */
@@ -41,25 +56,25 @@ public class Game
         // Each room of the game
         Room outside, theater, pub, lab, office;
         // Items for each room
-        Item outsideItems[] = {new Item ("Rope" , 50),
-                               new Item ("Bench to sit on", 10000),
-                               new Item ("Flower" , 5) };
+        Item outsideItems[] = {new Item ("Rope","Rope: could be useful" , 50),
+                               new Item ("Bench","Bench: to sit on", 10000),
+                               new Item ("Flower","Flower: smells great" , 5) };
                                
-        Item theaterItem[] = { new Item ("Projector to display videos" , 1500),
-                               new Item ("Popcorn: +20hp" , 100),
-                               new Item ("Wallet: contains $20", 150) };
+        Item theaterItem[] = { new Item ("Projector", "Projector: to display videos" , 1500),
+                               new Item ("Popcorn:","Popcorn: +20hp" , 100),
+                               new Item ("Wallet","Wallet: contains $20", 150) };
                                
-        Item pubItem[] = {     new Item ("Beer: -5 health", 15),
-                               new Item ("Soda: +10hp", 50),
-                               new Item ("Apple: +50hp", 250) };
+        Item pubItem[] = {     new Item ("Beer","Beer: -5 health", 15),
+                               new Item ("Soda","Soda: +10hp", 50),
+                               new Item ("Apple","Apple: +50hp", 250) };
                                
-        Item labItem[] = {     new Item ("Laptop: email - Hello Matt I left you a special apple in my office for you to try", 1000), 
-                               new Item ("Lighter" , 100),
-                               new Item ("Strange mushroom: -100hp", 5) };
+        Item labItem[] = {     new Item ("Laptop","Laptop: email - Hello Matt I left you a special apple in my office for you to try", 1000), 
+                               new Item ("Lighter","Lighter: could light up a room" , 100),
+                               new Item ("Strange mushroom","Strang mushroom: -100hp", 5) };
                                
-        Item officeItem[] = {  new Item ("Keys: can unlock certain doors", 250),
-                               new Item ("Golden apple: +1000 carry capacity", 15),
-                               new Item ("Flashlight", 150) };
+        Item officeItem[] = {  new Item ("Keys","Keys: can unlock certain doors", 250),
+                               new Item ("Golden apple","Golden apple: +1000 carry capacity", 15),
+                               new Item ("Flashlight", "Flashlight: can light up dark areas", 150) };
                                 
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -89,7 +104,7 @@ public class Game
 
         office.setExit("west", lab);
 
-        currentRoom = outside;  // start game outside
+        player.setCurrentRoom(outside);// Start the game outside
     }
 
     /**
@@ -108,6 +123,9 @@ public class Game
      */
     public void play() 
     {            
+        // calls the createPlayer() method
+        createPlayer();
+        
         printWelcome();
 
         // Enter the main command loop.  Here we repeatedly read commands and
@@ -131,7 +149,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getPlayerDescription());
     }
 
     /**
@@ -173,6 +191,14 @@ public class Game
             case BACK:
                 backRoom();
                 break;
+                
+            case TAKE:
+                pickUpItemFromRoom(command);
+                break;
+                
+            case DROP:
+                dropItemInHand(command);
+                break;
         }
         return wantToQuit;
     }
@@ -208,15 +234,14 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
+        Room nextRoom = player.getPlayersExit(direction);
+        
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
-            push(currentRoom);
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            player.setPlayersEnteringRoom(nextRoom);
+            System.out.println(player.getPlayerDescription());
         }
     }
 
@@ -258,38 +283,32 @@ public class Game
      */
     public void backRoom()
     {
-        currentRoom = pop();
-        if(currentRoom != null) {
-            System.out.println(currentRoom.getLongDescription());
-        }
+        player.movePlayerToPreviousRoom();
     }
     
     /**
-     * Add the current room to the stack
-     * @param add room to the roomStack
+     * A method to take the command take from the player and pick up the item
      */
-    private void push (Room room)
+    public void pickUpItemFromRoom(Command command)
     {
-        if(top == roomStack.length - 1) {
-            System.out.println("Room stack is full");
+        if(!command.hasSecondWord()) {
+            System.out.println("That item does not exist in this room");
+            return;
         }
-        else {
-            roomStack[++top] = room;
-        }
+        String itemName = command.getSecondWord();
+        player.pickUpItem(itemName);
     }
     
     /**
-     * Deletes the room at the top of the stack
-     * @return room if it exits and null if it doesn't
+     * A method to take the command drop from the player and drop that item
      */
-    private Room pop()
+    public void dropItemInHand(Command command)
     {
-        if (top < 0) {
-            System.out.println("You are at the start you can't go back any further");
-            return null;
+        if(!command.hasSecondWord()) {
+            System.out.println("That item does not exist in your inventory");
+            return;
         }
-        else {
-            return roomStack[top--];
-        }
+        String itemName = command.getSecondWord();
+        player.dropItem(itemName);
     }
 }

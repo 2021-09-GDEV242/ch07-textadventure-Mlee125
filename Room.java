@@ -36,6 +36,14 @@ public class Room
         // array list for all the items in the game
         roomItems = new ArrayList<Item>();
     }
+    
+    /**
+     * Gets the arrayList of the items added into each room
+     */
+    public ArrayList<Item> getRoomItems()
+    {
+        return roomItems;
+    }
 
     /**
      * Define an exit from this room.
@@ -55,7 +63,33 @@ public class Room
     {
         return description;
     }
-
+    
+    /**
+     * Gets the item if the item object is present in the room
+     */
+    public Item getItem(String itemName)
+    {
+        for (int i = 0; i < roomItems.size(); i++){
+            if(roomItems.get(i).getItemName().equalsIgnoreCase(itemName)) {
+                return roomItems.get(i);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Removes the item from the player
+     */
+    public void removeItem(Item item)
+    {
+        for(int i = 0; i < roomItems.size(); i++) {
+            if(roomItems.get(i) == item) {
+                roomItems.remove(item);
+                break;
+            }
+        }
+    }
+    
     /**
      * Return a description of the room in the form:
      *     You are in the kitchen.

@@ -56,7 +56,7 @@ public class Game
     private void createRooms()
     {
         // Each room of the game
-        Room outside, entrence, bathroom, book, foodhall, hiking, hidden, computer, coffee, clothing, phone, security, safe, shoe, exit;
+        Room outside, entrance, bathroom, book, foodhall, hiking, hidden, computer, coffee, clothing, phone, security, safe, shoe, exit,trapdoor;
         // Items for each room
         Item outsideItems[] = {new Item ("Rope","Rope: could be useful" , 50),
                                new Item ("Bench","Bench: to sit on", 10000),
@@ -100,7 +100,7 @@ public class Game
                                 
         // create the rooms
         outside = new Room("outside the main entrance of the university","",true);
-        entrence = new Room("You enter the mall and see many stores for you to check out",
+        entrance = new Room("You enter the mall and see many stores for you to check out",
                              "Security Guard: Welcome to the mall!!!",true);
         bathroom = new Room("in the bathroom","",true);
         book = new Room("in a book store",
@@ -118,6 +118,7 @@ public class Game
         safe = new Room("You found a hidden safe!!!","",true);
         shoe = new Room("in a shoe store","Stranger: I have to get those running shoes they will help me get back in shape",true);
         exit = new Room("You found the exit!!! - insert keys to exit","",false);
+        trapdoor = new Room("You fell into a trap door and were transported back to the entrence. Type go exit to leave the trap","",true);
         
         // add each item into each room
         outside = addItemsToRoom(outside, outsideItems);
@@ -135,18 +136,18 @@ public class Game
         shoe = addItemsToRoom(shoe, shoeItem);
         
         // initialise room exits
-        outside.setExit("south", entrence);
+        outside.setExit("south", entrance);
 
-        entrence.setExit("north", outside);
-        entrence.setExit("east", book);
-        entrence.setExit("south", foodhall);
-        entrence.setExit("west", bathroom);
+        entrance.setExit("north", outside);
+        entrance.setExit("east", book);
+        entrance.setExit("south", foodhall);
+        entrance.setExit("west", bathroom);
 
-        bathroom.setExit("east", entrence);
+        bathroom.setExit("east", entrance);
         
-        book.setExit("west", entrence);
+        book.setExit("west", entrance);
 
-        foodhall.setExit("north", entrence);
+        foodhall.setExit("north", entrance);
         foodhall.setExit("east", computer);
         foodhall.setExit("south", coffee);
         foodhall.setExit("west", hiking);
@@ -175,10 +176,13 @@ public class Game
         safe.setExit("west", security);
         
         shoe.setExit("north", coffee);
+        shoe.setExit("east",trapdoor);
         shoe.setExit("west", phone);
         shoe.setExit("south", exit);
+        
+        trapdoor.setExit("exit", entrance);
 
-        player.setCurrentRoom(outside);// Start the game outside
+        player.setCurrentRoom(shoe);// Start the game outside
     }
 
     /**

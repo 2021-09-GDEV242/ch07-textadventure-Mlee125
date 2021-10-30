@@ -10,10 +10,11 @@ public class Player
 {
     private String playerName;
     private Room currentRoom;
-    private int maximumWeight;
+    private static int maximumWeight = 1000;
     private Stack<Room> roomStack;
     private Item itemInHand;
     private ArrayList<String> inventory;
+    private Item magicCookie;
     
     /**
      * Constructor for objects of class Player
@@ -22,7 +23,6 @@ public class Player
     {
         playerName = "";
         currentRoom = null;
-        maximumWeight = 10000;
         roomStack = new Stack<Room>();
         itemInHand = null;
     }
@@ -214,7 +214,7 @@ public class Player
                 System.out.println(itemName + " was placed into your inventory");
             }
             else {
-                System.out.println("Item does not exist in this room or is too heavy");
+                System.out.println("Item does not exist in this room or is too heavy to be picked up");
             }
             return;
         }
@@ -234,5 +234,15 @@ public class Player
             System.out.println("That item does not exist in your inventory");
             return;
         }
+    }
+    
+    /**
+     * Player eats the magic cookie to increase carry weight
+     */
+    public void eatCookie()
+    {
+        maximumWeight += 2000;
+        System.out.println("Cookie eaten ");
+        System.out.println("New carry weight: " + maximumWeight);
     }
 }

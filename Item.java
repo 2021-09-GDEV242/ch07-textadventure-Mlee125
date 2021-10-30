@@ -11,6 +11,7 @@ public class Item
     private String itemDescription;
     private int itemWeight;
     private String name;
+    
 
     /**
      * Constructor for objects of class Item

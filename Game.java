@@ -43,9 +43,9 @@ public class Game
         String name = reader.nextLine();
         player.setPlayerName(name);
         createRooms();
-        System.out.println("Enter the maximum weight the player can carry");
-        int weight = reader.nextInt();
-        player.setMaximumWeight(weight);
+        //System.out.println("Enter the maximum weight the player can carry");
+        //int weight = reader.nextInt();
+        //player.setMaximumWeight(weight);
     }
     
     
@@ -73,7 +73,7 @@ public class Game
         Item hikingItem[] = {  new Item ("Jacket","Jacket: A jacket to keep you warm", 250),
                                new Item ("Flashlight", "Flashlight: can light up dark areas", 150) };
                                
-        Item hiddenItem[] = { new Item("Magic cookie", "Magic cookie: + 1000 carry weight", 100)};
+        Item hiddenItem[] = { new Item("cookie", "Magic cookie: + 2000 carry weight", 100)};
         
         Item computerItem[] = { new Item ("Laptop", "Laptop: NEW EMAIL! - Hey Paul I left you the keys to the exit in the safe for you", 10000)};
         
@@ -253,10 +253,6 @@ public class Game
                 look();
                 break;
                 
-            case EAT:
-                eat();
-                break;
-                
             case BACK:
                 backRoom();
                 break;
@@ -271,6 +267,10 @@ public class Game
                 
             case INVENTORY:
                 printItem();
+                break;
+                
+            case EATCOOKIE:
+                eatCookie();
                 break;
         }
         return wantToQuit;
@@ -395,6 +395,16 @@ public class Game
         System.out.println("\nItems in your inventory: " + inventory);
     }
     
-    
+    public void eatCookie()
+    {
+        Item cookie = player.getCurrentRoom().getItem("cookie");
+        if(cookie != null) {
+            player.eatCookie();
+            player.getCurrentRoom().removeItem(cookie);
+        }
+        else {
+            System.out.println("No cookie");
+        }
+    }
     
 }

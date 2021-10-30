@@ -55,55 +55,123 @@ public class Game
     private void createRooms()
     {
         // Each room of the game
-        Room outside, theater, pub, lab, office;
+        Room outside, entrence, bathroom, book, foodhall, hiking, hidden, computer, coffee, clothing, phone, security, safe, shoe, exit;
         // Items for each room
         Item outsideItems[] = {new Item ("Rope","Rope: could be useful" , 50),
                                new Item ("Bench","Bench: to sit on", 10000),
                                new Item ("Flower","Flower: smells great" , 5) };
                                
-        Item theaterItem[] = { new Item ("Projector", "Projector: to display videos" , 1500),
-                               new Item ("Popcorn:","Popcorn: +20hp" , 100),
-                               new Item ("Wallet","Wallet: contains $20", 150) };
+        Item bathroomItem[] = { new Item ("Toliet", "Toliet" , 10000),
+                                new Item ("Sink", "Sink", 10000)};
                                
-        Item pubItem[] = {     new Item ("Beer","Beer: -5 health", 15),
+        Item bookItem[] = {     new Item ("Book", "Book: A book on mazes", 200)};
+                               
+        Item foodhallItem[] = {new Item ("Pizza","Pizza: +25 health", 15),
                                new Item ("Soda","Soda: +10hp", 50),
                                new Item ("Apple","Apple: +50hp", 250) };
                                
-        Item labItem[] = {     new Item ("Laptop","Laptop: email - Hello Matt I left you a special apple in my office for you to try", 1000), 
-                               new Item ("Lighter","Lighter: could light up a room" , 100),
-                               new Item ("Strange mushroom","Strang mushroom: -100hp", 5) };
-                               
-        Item officeItem[] = {  new Item ("Keys","Keys: can unlock certain doors", 250),
-                               new Item ("Golden apple","Golden apple: +1000 carry capacity", 15),
+        Item hikingItem[] = {  new Item ("Jacket","Jacket: A jacket to keep you warm", 250),
                                new Item ("Flashlight", "Flashlight: can light up dark areas", 150) };
+                               
+        Item hiddenItem[] = { new Item("Magic cookie", "Magic cookie: + 1000 carry weight", 100)};
+        
+        Item computerItem[] = { new Item ("Laptop", "Laptop: NEW EMAIL! - Hey Paul I left you the keys to the exit in the safe for you", 10000)};
+        
+        Item coffeeItem[] = { new Item ("Coffee", "Coffee: +10hp", 25),
+                              new Item ("Water", "Water: + 30hp", 30)};
+                              
+        Item clothingItem[] = { new Item ("Shirt", "Shirt", 50),
+                                new Item("Pants", "Pants", 50)};
+                                
+        Item phoneItem[] = { new Item ("Phone", "Phone: use to call for a hint", 50)};
+        
+        Item securityItem[] = { new Item ("Cameras", "Cameras: Shows the exit somewhere south", 100000)};
+        
+        Item safeItem[] = { new Item ("Keys", "Keys: You found the keys to the exit!!!", 10)};
+        
+        Item shoeItem[] = { new Item ("Shoes", "Shoes: New shoes + 50 carry weight", 10)};
+        
+        
+        
+                              
+                              
+        
                                 
         // create the rooms
         outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        entrence = new Room("You enter the mall and see many stores for you to check out");
+        bathroom = new Room("in the bathroom");
+        book = new Room("in a book store");
+        foodhall = new Room("in the food hall");
+        hiking = new Room("in a hiking/adventure store");
+        hidden = new Room("You found a hidden room!!!");
+        computer = new Room("in a computer store");
+        coffee = new Room("in a cafe");
+        clothing = new Room("in a clothing store");
+        phone = new Room("in a phone store");
+        security = new Room("in the security room with a camera feed of the mall");
+        safe = new Room("You found a hidden safe!!!");
+        shoe = new Room("in a shoe store");
+        exit = new Room("You found the exit!!! - insert keys to exit");
         
         // add each item into each room
         outside = addItemsToRoom(outside, outsideItems);
-        theater = addItemsToRoom(theater, theaterItem);
-        pub = addItemsToRoom(pub, pubItem);
-        lab = addItemsToRoom(lab, labItem);
-        office = addItemsToRoom(office, officeItem);
+        bathroom = addItemsToRoom(bathroom, bathroomItem);
+        book = addItemsToRoom(book, bookItem);
+        foodhall = addItemsToRoom(foodhall, foodhallItem);
+        hiking = addItemsToRoom(hiking, hikingItem);
+        computer = addItemsToRoom(computer, computerItem);
+        hidden = addItemsToRoom(hidden, hiddenItem);
+        coffee = addItemsToRoom(coffee, coffeeItem);
+        clothing = addItemsToRoom(clothing, clothingItem);
+        phone = addItemsToRoom(phone, phoneItem);
+        security = addItemsToRoom(security, securityItem);
+        safe = addItemsToRoom(safe, safeItem);
+        shoe = addItemsToRoom(shoe, shoeItem);
         
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        outside.setExit("south", entrence);
 
-        theater.setExit("west", outside);
+        entrence.setExit("north", outside);
+        entrence.setExit("east", book);
+        entrence.setExit("south", foodhall);
+        entrence.setExit("west", bathroom);
 
-        pub.setExit("east", outside);
+        bathroom.setExit("east", entrence);
+        
+        book.setExit("west", entrence);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        foodhall.setExit("north", entrence);
+        foodhall.setExit("east", computer);
+        foodhall.setExit("south", coffee);
+        foodhall.setExit("west", hiking);
+        
+        hiking.setExit("west", hidden);
+        hiking.setExit("east", foodhall);
+        
+        hidden.setExit("east", hiking);
 
-        office.setExit("west", lab);
+        computer.setExit("west", foodhall);
+        
+        coffee.setExit("north", foodhall);
+        coffee.setExit("east", security);
+        coffee.setExit("south", shoe);
+        coffee.setExit("west", clothing);
+        
+        clothing.setExit("east", coffee);
+        clothing.setExit("south", phone);
+        
+        phone.setExit("north", clothing);
+        phone.setExit("east", shoe);
+        
+        security.setExit("east", safe);
+        security.setExit("west", coffee);
+        
+        safe.setExit("west", security);
+        
+        shoe.setExit("north", coffee);
+        shoe.setExit("west", phone);
+        shoe.setExit("south", exit);
 
         player.setCurrentRoom(outside);// Start the game outside
     }

@@ -106,11 +106,11 @@ public class Game
         book = new Room("in a book store",
                         "Employee: Welcome! We have got all the books you need",true);
         foodhall = new Room("in the food hall",
-                            "Stranger: You got to try the pizza its amazing!!!",true);
+                            "Stranger: You got to try the pizza its amazing and could make you feel better!!!",true);
         hiking = new Room("in a hiking/adventure store",
-                "Employee: Hows it going? We got all the hiking gear you can dream of",true);
+                "Employee: Hows it going? We got all the hiking gear you can dream of and some hidden treats",true);
         hidden = new Room("You found a hidden room!!!","",true);
-        computer = new Room("in a computer store","Employee: You should check out some of these laptops",true);
+        computer = new Room("in a computer store","Employee: You should check out some of these laptops it could be useful to you",true);
         coffee = new Room("in a cafe","Employee: We will get you up in the morning with our amazing coffee",true);
         clothing = new Room("in a clothing store","Stranger: Have you see this shirt its perfect!",true);
         phone = new Room("in a phone store","Stranger: Phones just seem to get bigger and bigger",true);

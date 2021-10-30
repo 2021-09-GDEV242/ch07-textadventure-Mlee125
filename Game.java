@@ -87,7 +87,7 @@ public class Game
         
         Item securityItem[] = { new Item ("Cameras", "Cameras: Shows the exit somewhere south", 100000)};
         
-        Item safeItem[] = { new Item ("Keys", "Keys: You found the keys to the exit!!!", 10)};
+        Item safeItem[] = { new Item ("Key", "Key: You found the keys to the exit!!!", 10)};
         
         Item shoeItem[] = { new Item ("Shoes", "Shoes: New shoes + 50 carry weight", 10)};
         
@@ -98,21 +98,21 @@ public class Game
         
                                 
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        entrence = new Room("You enter the mall and see many stores for you to check out");
-        bathroom = new Room("in the bathroom");
-        book = new Room("in a book store");
-        foodhall = new Room("in the food hall");
-        hiking = new Room("in a hiking/adventure store");
-        hidden = new Room("You found a hidden room!!!");
-        computer = new Room("in a computer store");
-        coffee = new Room("in a cafe");
-        clothing = new Room("in a clothing store");
-        phone = new Room("in a phone store");
-        security = new Room("in the security room with a camera feed of the mall");
-        safe = new Room("You found a hidden safe!!!");
-        shoe = new Room("in a shoe store");
-        exit = new Room("You found the exit!!! - insert keys to exit");
+        outside = new Room("outside the main entrance of the university",true);
+        entrence = new Room("You enter the mall and see many stores for you to check out", true);
+        bathroom = new Room("in the bathroom",true);
+        book = new Room("in a book store",true);
+        foodhall = new Room("in the food hall",true);
+        hiking = new Room("in a hiking/adventure store",true);
+        hidden = new Room("You found a hidden room!!!",true);
+        computer = new Room("in a computer store",true);
+        coffee = new Room("in a cafe",true);
+        clothing = new Room("in a clothing store",true);
+        phone = new Room("in a phone store",true);
+        security = new Room("in the security room with a camera feed of the mall",true);
+        safe = new Room("You found a hidden safe!!!",true);
+        shoe = new Room("in a shoe store",true);
+        exit = new Room("You found the exit!!! - insert keys to exit",false);
         
         // add each item into each room
         outside = addItemsToRoom(outside, outsideItems);
@@ -173,7 +173,7 @@ public class Game
         shoe.setExit("west", phone);
         shoe.setExit("south", exit);
 
-        player.setCurrentRoom(outside);// Start the game outside
+        player.setCurrentRoom(safe);// Start the game outside
     }
 
     /**
@@ -215,7 +215,7 @@ public class Game
     {
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("World of Zuul is a new, simple adventure game where you have to find the keys to escape the mall.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(player.getPlayerDescription());
@@ -272,6 +272,10 @@ public class Game
             case EATCOOKIE:
                 eatCookie();
                 break;
+                
+            case UNLOCK:
+                unlock();
+                break;
         }
         return wantToQuit;
     }
@@ -311,6 +315,11 @@ public class Game
         
         if (nextRoom == null) {
             System.out.println("There is no door!");
+        }
+        
+        if(!nextRoom.isOpen())
+        {
+            System.out.println("\nThe exit is locked please use a key to unlock it");
         }
         else {
             player.setPlayersEnteringRoom(nextRoom);
@@ -357,6 +366,34 @@ public class Game
     public void backRoom()
     {
         player.movePlayerToPreviousRoom();
+    }
+    
+    
+    /**
+     * Unlocks the door
+     */
+    public void unlock()
+    {
+        if(containsKeys() == true) {
+            System.out.println("Congrats you have beaten the game and made it out the exit. Type quit to exit the game");
+            boolean finished = true;
+        }
+        else {
+            System.out.println("You do not have the key to unlock this door");
+        }
+    }
+    
+    /**
+     * Checks to see if you have the key in your inventory
+     */
+    public boolean containsKeys()
+    {
+        if(inventory.contains("key")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     /**

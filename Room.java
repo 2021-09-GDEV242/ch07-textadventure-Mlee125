@@ -23,18 +23,20 @@ public class Room
     private HashMap<String, Room> exits;        // stores exits of this room.
     private Item roomItem;
     private ArrayList<Item> roomItems;
+    private boolean open;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, boolean isOpen) 
     {
         this.description = description;
         exits = new HashMap<>();
         // array list for all the items in the game
         roomItems = new ArrayList<Item>();
+        open = isOpen;
     }
     
     /**
@@ -146,5 +148,20 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    /**
+     * Checks to see if a room is locked or open
+     */
+    public boolean isOpen() {
+        return open;
+    }
+    
+    /**
+     * Unlocks the room
+     */
+    public void unlock() {
+        open = true;
+    }
+    
 }
 

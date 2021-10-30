@@ -1,0 +1,27 @@
+Features.txt
+
+Elements for B level
+
+Added items to my name to certain rooms 
+each item has a name, description and weight
+When entering a room all the items will print out with their information
+
+Added multiple items to certain rooms
+
+Added the back command(back one room)
+
+Added to the back command to allow the player to go back multple rooms and retrace their steps
+
+Added the take and drop command to allow the player to pick up items
+This is needed for the player to pick up the hidden keys to unlock the exit to the game
+
+Elements for A level
+
+Added locked and unlocked doors to the game
+The only locked door in the game is the exit
+The player has to find the hidden keys and make it to the end with them in their inventory
+
+Added unlock command to allow the player to unlock the exit only if they are carrying the keys in their inventory
+
+Added a trap door to the game
+Players will enter the trap door room and realize the only exit in that room will take them all the way back to the start of the game.

@@ -24,18 +24,20 @@ public class Room
     private Item roomItem;
     private ArrayList<Item> roomItems;
     private boolean open;
+    private String npc;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, boolean isOpen) 
+    public Room(String description, String npc, boolean isOpen) 
     {
         this.description = description;
         exits = new HashMap<>();
         // array list for all the items in the game
         roomItems = new ArrayList<Item>();
+        this.npc = npc;
         open = isOpen;
     }
     
@@ -100,7 +102,7 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getItemsInRoom() + getExitString();
+        return "You are " + description + ".\n" + npc +"\n" + getItemsInRoom() + getExitString();
     }
     
     /**
@@ -113,6 +115,14 @@ public class Room
             returnItems += item.getItemDescription() + "\n";
         }
         return returnItems;
+    }
+    
+    /** 
+     * Gets the npc in the room and displays their dialog
+     */
+    public String getNpc()
+    {
+        return npc;
     }
     
     /**

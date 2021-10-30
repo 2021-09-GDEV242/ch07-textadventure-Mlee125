@@ -23,6 +23,7 @@ public class Game
     private Scanner reader;
     private Player player;
     private ArrayList<String> inventory;
+    private String npc;
     /**
      * Create the game and initialise its internal map.
      */
@@ -98,21 +99,25 @@ public class Game
         
                                 
         // create the rooms
-        outside = new Room("outside the main entrance of the university",true);
-        entrence = new Room("You enter the mall and see many stores for you to check out", true);
-        bathroom = new Room("in the bathroom",true);
-        book = new Room("in a book store",true);
-        foodhall = new Room("in the food hall",true);
-        hiking = new Room("in a hiking/adventure store",true);
-        hidden = new Room("You found a hidden room!!!",true);
-        computer = new Room("in a computer store",true);
-        coffee = new Room("in a cafe",true);
-        clothing = new Room("in a clothing store",true);
-        phone = new Room("in a phone store",true);
-        security = new Room("in the security room with a camera feed of the mall",true);
-        safe = new Room("You found a hidden safe!!!",true);
-        shoe = new Room("in a shoe store",true);
-        exit = new Room("You found the exit!!! - insert keys to exit",false);
+        outside = new Room("outside the main entrance of the university","",true);
+        entrence = new Room("You enter the mall and see many stores for you to check out",
+                             "Security Guard: Welcome to the mall!!!",true);
+        bathroom = new Room("in the bathroom","",true);
+        book = new Room("in a book store",
+                        "Employee: Welcome! We have got all the books you need",true);
+        foodhall = new Room("in the food hall",
+                            "Stranger: You got to try the pizza its amazing!!!",true);
+        hiking = new Room("in a hiking/adventure store",
+                "Employee: Hows it going? We got all the hiking gear you can dream of",true);
+        hidden = new Room("You found a hidden room!!!","",true);
+        computer = new Room("in a computer store","Employee: You should check out some of these laptops",true);
+        coffee = new Room("in a cafe","Employee: We will get you up in the morning with our amazing coffee",true);
+        clothing = new Room("in a clothing store","Stranger: Have you see this shirt its perfect!",true);
+        phone = new Room("in a phone store","Stranger: Phones just seem to get bigger and bigger",true);
+        security = new Room("in the security room with a camera feed of the mall","",true);
+        safe = new Room("You found a hidden safe!!!","",true);
+        shoe = new Room("in a shoe store","Stranger: I have to get those running shoes they will help me get back in shape",true);
+        exit = new Room("You found the exit!!! - insert keys to exit","",false);
         
         // add each item into each room
         outside = addItemsToRoom(outside, outsideItems);
@@ -173,7 +178,7 @@ public class Game
         shoe.setExit("west", phone);
         shoe.setExit("south", exit);
 
-        player.setCurrentRoom(safe);// Start the game outside
+        player.setCurrentRoom(outside);// Start the game outside
     }
 
     /**
